@@ -2,7 +2,7 @@
     "kind": "SelfSubjectAccessReview",
     "apiVersion": "authorization.k8s.io/v1",
     "metadata": {
-        "name": ""
+        "name": "pytorch"
     },
     "spec": {
         "resourceAttributes": {
