@@ -2,6 +2,9 @@
     "kind": "Namespace",
     "apiVersion": "v1",
     "metadata": {
-        "name": "pytorch"
+        "name": "pytorch",
+        "labels": {
+            "opendatahub.io/dashboard": "true"
+        }
     }
 }
