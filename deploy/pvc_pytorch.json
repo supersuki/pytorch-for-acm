@@ -1,0 +1,33 @@
+{
+  "kind": "PersistentVolumeClaim",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "pytorch",
+    "namespace": "pytorch",
+    "labels": {
+      "opendatahub.io/dashboard": "true"
+    },
+    "annotations": {
+      "openshift.io/description": "",
+      "openshift.io/display-name": "pytorch"
+    },
+    "finalizers": [
+      "kubernetes.io/pvc-protection"
+    ]
+  },
+  "spec": {
+    "accessModes": [
+      "ReadWriteOnce"
+    ],
+    "resources": {
+      "requests": {
+        "storage": "20Gi"
+      }
+    },
+    "storageClassName": "thin-csi",
+    "volumeMode": "Filesystem"
+  },
+  "status": {
+    "phase": "Pending"
+  }
+}

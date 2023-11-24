@@ -1,7 +1,8 @@
 ---
 resources:
-- namespace.yaml
-- subsription.operators.coreos.com_rhods-operator.yaml
-- pvc_pytorch.yaml
-- notebook.kubeflow.org_pytorch.yaml
+- namespace.json
+- operatorgroup.json
+- subsription.operators.coreos.com_rhods-operator.json
+- pvc_pytorch.json
+- notebook.kubeflow.org_pytorch.json
 # - selfsubjectaccessreview_authorization.k8s.io.yaml

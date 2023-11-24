@@ -1,0 +1,134 @@
+{
+  "apiVersion": "kubeflow.org/v1",
+  "kind": "Notebook",
+  "metadata": {
+    "labels": {
+      "app": "pytorch",
+      "opendatahub.io/odh-managed": "true",
+      "opendatahub.io/user": "kube-3aadmin",
+      "opendatahub.io/dashboard": "true"
+    },
+    "annotations": {
+      "openshift.io/display-name": "pytorch",
+      "openshift.io/description": "",
+      "notebooks.opendatahub.io/last-size-selection": "Small",
+      "notebooks.opendatahub.io/last-image-selection": "pytorch:2023.1",
+      "notebooks.opendatahub.io/inject-oauth": "true",
+      "opendatahub.io/username": "kube:admin"
+    },
+    "name": "pytorch",
+    "namespace": "pytorch"
+  },
+  "spec": {
+    "template": {
+      "spec": {
+        "affinity": {
+          "nodeAffinity": {
+            "preferredDuringSchedulingIgnoredDuringExecution": [
+              {
+                "preference": {
+                  "matchExpressions": [
+                    {
+                      "key": "nvidia.com/gpu.present",
+                      "operator": "NotIn",
+                      "values": [
+                        "true"
+                      ]
+                    }
+                  ]
+                },
+                "weight": 1
+              }
+            ]
+          }
+        },
+        "enableServiceLinks": false,
+        "containers": [
+          {
+            "image": "image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/pytorch:2023.1",
+            "imagePullPolicy": "Always",
+            "workingDir": "/opt/app-root/src",
+            "name": "pytorch",
+            "env": [
+              {
+                "name": "NOTEBOOK_ARGS",
+                "value": "--ServerApp.port=8888\n                  --ServerApp.token=''\n                  --ServerApp.password=''\n                  --ServerApp.base_url=/notebook/pytorch/pytorch\n                  --ServerApp.quit_button=False\n                  --ServerApp.tornado_settings={\"user\":\"kube-3aadmin\",\"hub_host\":\"https://rhods-dashboard-redhat-ods-applications.apps.n02.fusion.com\",\"hub_prefix\":\"/projects/pytorch\"}"
+              },
+              {
+                "name": "JUPYTER_IMAGE",
+                "value": "image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/pytorch:2023.1"
+              }
+            ],
+            "envFrom": [],
+            "resources": {
+              "limits": {
+                "cpu": "2",
+                "memory": "8Gi"
+              },
+              "requests": {
+                "cpu": "1",
+                "memory": "8Gi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/app-root/src",
+                "name": "pytorch"
+              },
+              {
+                "name": "shm",
+                "mountPath": "/dev/shm"
+              }
+            ],
+            "ports": [
+              {
+                "name": "notebook-port",
+                "containerPort": 8888,
+                "protocol": "TCP"
+              }
+            ],
+            "livenessProbe": {
+              "initialDelaySeconds": 10,
+              "periodSeconds": 5,
+              "timeoutSeconds": 1,
+              "successThreshold": 1,
+              "failureThreshold": 3,
+              "httpGet": {
+                "scheme": "HTTP",
+                "path": "/notebook/pytorch/pytorch/api",
+                "port": "notebook-port"
+              }
+            },
+            "readinessProbe": {
+              "initialDelaySeconds": 10,
+              "periodSeconds": 5,
+              "timeoutSeconds": 1,
+              "successThreshold": 1,
+              "failureThreshold": 3,
+              "httpGet": {
+                "scheme": "HTTP",
+                "path": "/notebook/pytorch/pytorch/api",
+                "port": "notebook-port"
+              }
+            }
+          }
+        ],
+        "volumes": [
+          {
+            "name": "pytorch",
+            "persistentVolumeClaim": {
+              "claimName": "pytorch"
+            }
+          },
+          {
+            "name": "shm",
+            "emptyDir": {
+              "medium": "Memory"
+            }
+          }
+        ],
+        "tolerations": []
+      }
+    }
+  }
+}
