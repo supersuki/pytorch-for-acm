@@ -1,6 +1,7 @@
 ---
 resources:
-- namespace.json
+- namespace_pytorch.json
+- namespace_redhat_ods_operator.json
 - operatorgroup.json
 - subsription.operators.coreos.com_rhods-operator.json
 - pvc_pytorch.json
