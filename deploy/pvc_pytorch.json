@@ -24,7 +24,7 @@
         "storage": "20Gi"
       }
     },
-    "storageClassName": "thin-csi",
+    "storageClassName": "ocs-external-storagecluster-ceph-rbd",
     "volumeMode": "Filesystem"
   },
   "status": {
