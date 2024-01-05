@@ -45,7 +45,7 @@
         "enableServiceLinks": false,
         "containers": [
           {
-            "image": "image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/pytorch:2023.1",
+            "image": "quay.io/modh/odh-pytorch-notebook@sha256:5e1523a2637beb5f9d3a2aaca65a18febe1b2e08e5e8a724596c38554a317b8a",
             "imagePullPolicy": "Always",
             "workingDir": "/opt/app-root/src",
             "name": "pytorch",
@@ -56,7 +56,7 @@
               },
               {
                 "name": "JUPYTER_IMAGE",
-                "value": "image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/pytorch:2023.1"
+                "value": "quay.io/modh/odh-pytorch-notebook@sha256:5e1523a2637beb5f9d3a2aaca65a18febe1b2e08e5e8a724596c38554a317b8a"
               }
             ],
             "envFrom": [],
